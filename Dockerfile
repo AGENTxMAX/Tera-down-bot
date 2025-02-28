@@ -1,14 +1,20 @@
 FROM python:3.9-slim
 
-# Sabse pehle pip, setuptools aur wheel ko upgrade karein
+# APT packages update aur aria2 install karein
+RUN apt-get update && \
+    apt-get install -y aria2 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Pip, setuptools aur wheel ko upgrade karein
 RUN pip install --upgrade pip setuptools wheel
 
-# Ab aapki repository ke files copy karein
 WORKDIR /app
+
+# Repository ke sabhi files copy karein
 COPY . /app
 
-# Requirements install karein
+# Python dependencies install karein
 RUN pip install -r requirements.txt
 
-# Container start hone par start.sh run ho
+# Container start hone par start.sh script run karein
 CMD ["bash", "start.sh"]
