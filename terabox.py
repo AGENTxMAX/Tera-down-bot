@@ -17,7 +17,7 @@ from database.database import present_user, add_user, full_userbase, del_user, d
 from shortzy import Shortzy  # Assuming this is a custom module
 from pymongo.errors import DuplicateKeyError
 from web import keep_alive
-from config import ADMINS, api_id, api_hash, bot_token, dump_id, fsub_id, mongo_url
+from config import *
 
 
 
