@@ -40,6 +40,12 @@ if not fsub_id:
 else:
     fsub_id = int(fsub_id)
 
+mongo_url = os.environ.get('MONGO_URL', '')
+if not mongo_url:
+    logging.error("MONGO_URL variable is missing! Exiting now")
+    exit(1)
+else:
+    mongo_url = int(mongo_url)
 
 
 #Database 
