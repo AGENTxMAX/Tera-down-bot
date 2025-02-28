@@ -1,15 +1,45 @@
+import os
+import logging
 from os import getenv
 
-from dotenv import load_dotenv
 load_dotenv()
 
-API_ID = int(getenv("API_ID", ""))
-API_HASH = getenv("API_HASH")
-BOT_TOKEN = getenv("BOT_TOKEN")
-MONGO_DB_URI = getenv("MONGO_DB_URI", None)
-LOG_GROUP_ID = int(getenv("LOG_GROUP_ID", ""))
-FSUB_ID = int(getenv("FSUB_ID", ""))
-OWNER_ID = list(map(int, getenv("OWNER_ID", "").split())) 
+logging.basicConfig(level=logging.INFO)
+
+ADMINS = list(map(int, os.environ.get('ADMINS', '1679112664').split()))
+if not ADMINS:
+    logging.error("ADMINS variable is missing! Exiting now")
+    exit(1)
+
+api_id = os.environ.get('TELEGRAM_API', '')
+if not api_id:
+    logging.error("TELEGRAM_API variable is missing! Exiting now")
+    exit(1)
+
+api_hash = os.environ.get('TELEGRAM_HASH', '')
+if not api_hash:
+    logging.error("TELEGRAM_HASH variable is missing! Exiting now")
+    exit(1)
+
+bot_token = os.environ.get('BOT_TOKEN', '')
+if not bot_token:
+    logging.error("BOT_TOKEN variable is missing! Exiting now")
+    exit(1)
+
+dump_id = os.environ.get('DUMP_CHAT_ID', '')
+if not dump_id:
+    logging.error("DUMP_CHAT_ID variable is missing! Exiting now")
+    exit(1)
+else:
+    dump_id = int(dump_id)
+
+fsub_id = os.environ.get('FSUB_ID', '')
+if not fsub_id:
+    logging.error("FSUB_ID variable is missing! Exiting now")
+    exit(1)
+else:
+    fsub_id = int(fsub_id)
+
 
 
 #Database 
