@@ -1,4 +1,16 @@
-import os
+from os import getenv
+
+from dotenv import load_dotenv
+load_dotenv()
+
+API_ID = int(getenv("API_ID", ""))
+API_HASH = getenv("API_HASH")
+BOT_TOKEN = getenv("BOT_TOKEN")
+MONGO_DB_URI = getenv("MONGO_DB_URI", None)
+LOG_GROUP_ID = int(getenv("LOG_GROUP_ID", ""))
+FSUB_ID = int(getenv("FSUB_ID", ""))
+OWNER_ID = list(map(int, getenv("OWNER_ID", "6955568347").split())) 
+
 
 #Database 
 #Database [https://youtu.be/qFB0cFqiyOM?si=fVicsCcRSmpuja1A]
