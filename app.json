@@ -34,7 +34,7 @@
         "value": "-1002418545472",
         "required": false
       },
-      "MONGO_DB_URI": {
+      "MONGO_URL": {
         "description": "Get a mongodb url from `https://cloud.mongodb.com` . You can leave it blank if you want , bot will use VIP's database for you.",
         "value": "mongodb+srv://hegodal811:rsRu17pspZAcp6V7@cluster0.prsvqax.mongodb.net/?retryWrites=true&w=majority",
         "required": true
