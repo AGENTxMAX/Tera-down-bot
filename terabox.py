@@ -24,7 +24,7 @@ load_dotenv('config.env', override=True)
 
 logging.basicConfig(level=logging.INFO)
 
-ADMINS = list(map(int, os.environ.get('ADMINS', '6695586027').split()))
+ADMINS = list(map(int, os.environ.get('ADMINS', '1679112664').split()))
 if not ADMINS:
     logging.error("ADMINS variable is missing! Exiting now")
     exit(1)
