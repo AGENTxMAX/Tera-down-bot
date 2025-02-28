@@ -10,7 +10,6 @@ from pyrogram import Client, filters
 from pyrogram.enums import ChatMemberStatus
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated
-from os import environ
 import time
 from status import format_progress_bar  # Assuming this is a custom module
 from video import download_video, upload_video  # Assuming these are custom modules
@@ -18,47 +17,10 @@ from database.database import present_user, add_user, full_userbase, del_user, d
 from shortzy import Shortzy  # Assuming this is a custom module
 from pymongo.errors import DuplicateKeyError
 from web import keep_alive
-from config import *
-
-load_dotenv('config.env', override=True)
-
-logging.basicConfig(level=logging.INFO)
-
-ADMINS = list(map(int, os.environ.get('ADMINS', '1679112664').split()))
-if not ADMINS:
-    logging.error("ADMINS variable is missing! Exiting now")
-    exit(1)
-    
-api_id = os.environ.get('TELEGRAM_API', '')
-if not api_id:
-    logging.error("TELEGRAM_API variable is missing! Exiting now")
-    exit(1)
-
-api_hash = os.environ.get('TELEGRAM_HASH', '')
-if not api_hash:
-    logging.error("TELEGRAM_HASH variable is missing! Exiting now")
-    exit(1)
-    
-bot_token = os.environ.get('BOT_TOKEN', '')
-if not bot_token:
-    logging.error("BOT_TOKEN variable is missing! Exiting now")
-    exit(1)
-dump_id = os.environ.get('DUMP_CHAT_ID', '')
-if not dump_id:
-    logging.error("DUMP_CHAT_ID variable is missing! Exiting now")
-    exit(1)
-else:
-    dump_id = int(dump_id)
-
-fsub_id = os.environ.get('FSUB_ID', '')
-if not fsub_id:
-    logging.error("FSUB_ID variable is missing! Exiting now")
-    exit(1)
-else:
-    fsub_id = int(fsub_id)
+from config import ADMINS, api_id, api_hash, bot_token, dump_id, fsub_id, mongo_url
 
 
-mongo_url = os.environ.get('MONGO_URL', 'mongodb+srv://hegodal811:rsRu17pspZAcp6V7@cluster0.prsvqax.mongodb.net/?retryWrites=true&w=majority')
+
 client = MongoClient(mongo_url)
 db = client['cphdlust']
 users_collection = db['users']
