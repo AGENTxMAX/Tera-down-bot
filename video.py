@@ -10,6 +10,20 @@ from pyrogram.errors import MessageNotModified, FloodWait
 import asyncio
 from yt_dlp import YoutubeDL
 
+import asyncio
+from pyrogram.errors import MessageNotModified
+
+def safe_edit_message(reply_msg, progress_text, loop):
+    async def edit():
+        try:
+            await reply_msg.edit_text(progress_text)
+        except MessageNotModified:
+            pass
+        except Exception as e:
+            print(f"Error updating message: {e}")
+
+    asyncio.run_coroutine_threadsafe(edit(), loop)
+
 async def download_video(url, reply_msg, user_mention, user_id):
     response = requests.get(f"https://terabox.udayscriptsx.workers.dev/?url={url}")
     response.raise_for_status()
@@ -54,8 +68,9 @@ async def download_video(url, reply_msg, user_mention, user_id):
                 user_id=user_id,
             )
 
+            
             loop = asyncio.get_running_loop()
-            asyncio.run_coroutine_threadsafe(reply_msg.edit_text(progress_text), loop)
+            safe_edit_message(reply_msg, progress_text, loop)
 
         elif d["status"] == "finished":
             return d["filename"]
