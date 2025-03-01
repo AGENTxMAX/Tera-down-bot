@@ -1,9 +1,5 @@
-import logging
-
 def format_progress_bar(filename, percentage, done, total_size, status, eta, speed, elapsed, user_mention, user_id):
     bar_length = 10
-    logging.info(f"\n\nDuration:- {percentage}\n\n")
-    exit()
     percentage = float(str(percentage).strip("%"))  # Ensure percentage is a float
     filled_length = int(bar_length * percentage / 100.0)
     bar = '★' * filled_length + '☆' * (bar_length - filled_length)
