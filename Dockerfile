@@ -1,8 +1,7 @@
-FROM python:3.9-slim
+FROM python:3.10-slim
 
-# APT packages update aur aria2 install karein
+# APT packages update karein aur unnecessary dependencies na install karein
 RUN apt-get update && \
-    apt-get install -y aria2 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Pip, setuptools aur wheel ko upgrade karein
