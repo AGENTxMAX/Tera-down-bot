@@ -10,14 +10,11 @@ from pyrogram.errors import MessageNotModified, FloodWait
 import asyncio
 from yt_dlp import YoutubeDL
 
-import asyncio
-from pyrogram.errors import MessageNotModified
-
 def safe_edit_message(reply_msg, progress_text, loop):
     async def edit():
         try:
             await reply_msg.edit_text(progress_text)
-        except MessageNotModified:
+        except (FloodWait, MessageNotModified):
             pass
         except Exception as e:
             print(f"Error updating message: {e}")
