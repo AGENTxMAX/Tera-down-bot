@@ -1,10 +1,22 @@
+import re
+
+def remove_ansi(text):
+    """Removes ANSI escape sequences from a given text."""
+    ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+    return ansi_escape.sub('', text).strip()
+
 def format_progress_bar(filename, percentage, done, total_size, status, eta, speed, elapsed, user_mention, user_id):
+    """Formats a progress bar for downloads."""
     bar_length = 10
-    percentage = float(str(percentage).strip("%"))  # Ensure percentage is a float
+    
+    # Clean and convert percentage
+    percentage = float(remove_ansi(str(percentage)).replace("%", "").strip())
+
     filled_length = int(bar_length * percentage / 100.0)
     bar = '★' * filled_length + '☆' * (bar_length - filled_length)
 
     def format_size(size):
+        """Formats file size in a human-readable format."""
         if size is None or size == 0:
             return "0 B"
         size = int(size)
@@ -18,6 +30,7 @@ def format_progress_bar(filename, percentage, done, total_size, status, eta, spe
             return f"{size / 1024 ** 3:.2f} GB"
 
     def format_time(seconds):
+        """Formats time in a human-readable format."""
         if seconds is None or seconds <= 0:
             return "N/A"
         seconds = int(seconds)
@@ -37,5 +50,5 @@ def format_progress_bar(filename, percentage, done, total_size, status, eta, spe
         f"┠ sᴛᴀᴛᴜs: {status}\n"
         f"┠ sᴘᴇᴇᴅ: {format_size(speed)}/s\n"
         f"┠ ᴇᴛᴀ: {format_time(eta)}\n"
-        f"┖ ᴜsᴇʀ: {user_mention} | ɪᴅ: {user_id}" 
+        f"┖ ᴜsᴇʀ: {user_mention} | ɪᴅ: {user_id}"
     )
