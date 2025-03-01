@@ -286,11 +286,11 @@ async def handle_message(client, message: Message):
         verify_status['is_verified'] = False
         logging.info(f"Verification expired for user {user_id}")
 
-    if not verify_status["is_verified"]:
-        await message.reply_text("To use this bot, please verify your identity. Click /start to begin.")
-        return
+    #if not verify_status["is_verified"]:
+     #   await message.reply_text("To use this bot, please verify your identity. Click /start to begin.")
+       # return
 
-    is_member = await is_user_member(client, user_id)
+    is_member = True or await is_user_member(client, user_id)
 
     if not is_member:
         join_button = InlineKeyboardButton("Join ❤️🚀", url="https://t.me/ultroid_official")
