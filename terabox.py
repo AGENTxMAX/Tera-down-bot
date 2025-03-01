@@ -98,6 +98,10 @@ async def start_command(client, message):
     await asyncio.sleep(1.8)
     await sticker_message.delete()
 
+    reply_message = (
+            f"Welcome, {user_mention}.\n\n"
+            "🌟 I am a terabox downloader bot. Send me any terabox link and I will download it within a few seconds and send it to you ✨."
+        )
     join_button = InlineKeyboardButton("Join ❤️🚀", url="https://t.me/ultroid_official")
     developer_button = InlineKeyboardButton("Developer ⚡️", url="https://t.me/ultroidxTeam")
     reply_markup = InlineKeyboardMarkup([[join_button, developer_button]])
