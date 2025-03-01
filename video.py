@@ -7,13 +7,9 @@ import os, time
 import logging
 from pyrogram.errors import MessageNotModified, FloodWait
 
-aria2 = aria2p.API(
-    aria2p.Client(
-        host="http://localhost",
-        port=6800,
-        secret=""
-    )
-)
+import asyncio
+from yt_dlp import YoutubeDL
+
 async def download_video(url, reply_msg, user_mention, user_id):
     response = requests.get(f"https://terabox.udayscriptsx.workers.dev/?url={url}")
     response.raise_for_status()
@@ -23,48 +19,63 @@ async def download_video(url, reply_msg, user_mention, user_id):
     thumbnail_url = data["thumb"]
     video_title = data["file_name"]
 
-    download = aria2.add_uris([fast_download_link])
+    download_dir = "downloads"
+    os.makedirs(download_dir, exist_ok=True)
+
+    output_template = os.path.join(download_dir, "%(title)s.%(ext)s")
+
+    ydl_opts = {
+        "outtmpl": output_template,
+        "progress_hooks": [],
+        "noplaylist": True,
+    }
+
     start_time = datetime.now()
 
-    while not download.is_complete:
-        download.update()
-        percentage = download.progress
-        done = download.completed_length
-        total_size = download.total_length
-        speed = download.download_speed
-        eta = download.eta
-        elapsed_time_seconds = (datetime.now() - start_time).total_seconds()
-        progress_text = format_progress_bar(
-            filename=video_title,
-            percentage=percentage,
-            done=done,
-            total_size=total_size,
-            status="Downloading",
-            eta=eta,
-            speed=speed,
-            elapsed=elapsed_time_seconds,
-            user_mention=user_mention,
-            user_id=user_id,
-            aria2p_gid=download.gid
-        )
-        try:
-            await reply_msg.edit_text(progress_text)
-        except (FloodWait, MessageNotModified):
-            pass
+    def progress_hook(d):
+        if d["status"] == "downloading":
+            percentage = d.get("_percent_str", "0%").strip()
+            done = d.get("downloaded_bytes", 0)
+            total_size = d.get("total_bytes", 1)
+            speed = d.get("_speed_str", "0B/s").strip()
+            eta = d.get("_eta_str", "N/A").strip()
+            elapsed_time_seconds = (datetime.now() - start_time).total_seconds()
 
-    if download.is_complete:
-        file_path = download.files[0].path
+            progress_text = format_progress_bar(
+                filename=video_title,
+                percentage=percentage,
+                done=done,
+                total_size=total_size,
+                status="Downloading",
+                eta=eta,
+                speed=speed,
+                elapsed=elapsed_time_seconds,
+                user_mention=user_mention,
+                user_id=user_id,
+            )
 
-        thumbnail_path = "thumbnail.jpg"
-        thumbnail_response = requests.get(thumbnail_url)
-        with open(thumbnail_path, "wb") as thumb_file:
-            thumb_file.write(thumbnail_response.content)
+            loop = asyncio.get_running_loop()
+            asyncio.run_coroutine_threadsafe(reply_msg.edit_text(progress_text), loop)
 
-        await reply_msg.edit_text("ᴜᴘʟᴏᴀᴅɪɴɢ...")
+        elif d["status"] == "finished":
+            return d["filename"]
 
-        return file_path, thumbnail_path, video_title
-    else:
-        raise Exception("Download failed")
+    ydl_opts["progress_hooks"].append(progress_hook)
+
+    with YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(fast_download_link, download=True)
+        file_path = ydl.prepare_filename(info)
+
+    # Download thumbnail
+    thumbnail_path = os.path.join(download_dir, "thumbnail.jpg")
+    thumbnail_response = requests.get(thumbnail_url)
+    with open(thumbnail_path, "wb") as thumb_file:
+        thumb_file.write(thumbnail_response.content)
+
+    await reply_msg.edit_text("ᴜᴘʟᴏᴀᴅɪɴɢ...")
+
+    return file_path, thumbnail_path, video_title
+
 
 async def upload_video(client, file_path, thumbnail_path, video_title, reply_msg, collection_channel_id, user_mention, user_id, message):
     file_size = os.path.getsize(file_path)
