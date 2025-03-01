@@ -5,7 +5,7 @@ from status import format_progress_bar
 import asyncio
 import os, time
 import logging
-
+from pyrogram.errors import MessageNotModified, FloodWait
 
 aria2 = aria2p.API(
     aria2p.Client(
@@ -47,8 +47,10 @@ async def download_video(url, reply_msg, user_mention, user_id):
             user_id=user_id,
             aria2p_gid=download.gid
         )
-        await reply_msg.edit_text(progress_text)
-        await asyncio.sleep(2)
+        try:
+            await reply_msg.edit_text(progress_text)
+        except (FloodWait, MessageNotModified):
+            pass
 
     if download.is_complete:
         file_path = download.files[0].path
