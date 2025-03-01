@@ -1,4 +1,4 @@
-def format_progress_bar(filename, percentage, done, total_size, status, eta, speed, elapsed, user_mention, user_id, aria2p_gid):
+def format_progress_bar(filename, percentage, done, total_size, status, eta, speed, elapsed, user_mention, user_id):
     bar_length = 10
     filled_length = int(bar_length * percentage / 100)
     bar = '★' * filled_length + '☆' * (bar_length - filled_length)
