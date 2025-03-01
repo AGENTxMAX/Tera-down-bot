@@ -87,7 +87,26 @@ async def update_verify_status(user_id, verify_token="", is_verified=False, veri
     current['link'] = link
     await db_update_verify_status(user_id, current)
 
+
+
 @app.on_message(filters.command("start"))
+async def start_command(client, message):
+    user_id = message.from_user.id
+    user_mention = message.from_user.mention
+
+    sticker_message = await message.reply_sticker("CAACAgQAAxkBAAEBMTlnwo_IUAKtLwABqLNDoWN6EWw3jG4AApMUAALbfplQcwOtw1dR4c0eBA")
+    await asyncio.sleep(1.8)
+    await sticker_message.delete()
+
+    join_button = InlineKeyboardButton("Join ❤️🚀", url="https://t.me/ultroid_official")
+    developer_button = InlineKeyboardButton("Developer ⚡️", url="https://t.me/ultroidxTeam")
+    reply_markup = InlineKeyboardMarkup([[join_button, developer_button]])
+    await message.reply_text(reply_message, reply_markup=reply_markup)
+    
+
+
+
+#@app.on_message(filters.command("start"))
 async def start_command(client, message):
     user_id = message.from_user.id
     user_mention = message.from_user.mention
