@@ -72,7 +72,7 @@ async def download_video(url, reply_msg, user_mention, user_id):
         elif d["status"] == "finished":
             return d["filename"]
 
-    ydl_opts["progress_hooks"].append(progress_hook)
+    #ydl_opts["progress_hooks"].append(progress_hook)
 
     with YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(fast_download_link, download=True)
