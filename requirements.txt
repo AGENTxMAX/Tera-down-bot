@@ -1,6 +1,7 @@
 yt-dlp
 pyrogram
 pymongo
+aria2p
 motor
 shortzy
 requests
