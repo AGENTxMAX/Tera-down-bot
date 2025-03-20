@@ -1,19 +1,19 @@
 import requests
-import aria2p
-from datetime import datetime
-from status import format_progress_bar
-import asyncio
-import os, time
+import os
+import time
 import logging
-from pyrogram.errors import MessageNotModified, FloodWait
-
 import asyncio
 from yt_dlp import YoutubeDL
+from datetime import datetime
+from pyrogram.errors import MessageNotModified, FloodWait
+from status import format_progress_bar
 
+# Safe Edit Message Function
 def safe_edit_message(reply_msg, progress_text, loop):
     async def edit():
         try:
-            await reply_msg.edit_text(progress_text)
+            if reply_msg.text != progress_text:  # Prevent redundant edits
+                await reply_msg.edit_text(progress_text)
         except (FloodWait, MessageNotModified):
             pass
         except Exception as e:
@@ -21,6 +21,7 @@ def safe_edit_message(reply_msg, progress_text, loop):
 
     asyncio.run_coroutine_threadsafe(edit(), loop)
 
+# Download Video Function
 async def download_video(url, reply_msg, user_mention, user_id):
     response = requests.get(f"https://terabox.udayscriptsx.workers.dev/?url={url}")
     response.raise_for_status()
@@ -43,6 +44,7 @@ async def download_video(url, reply_msg, user_mention, user_id):
 
     start_time = datetime.now()
 
+    # Download Progress Hook
     def progress_hook(d):
         if d["status"] == "downloading":
             percentage = d.get("_percent_str", "0%").strip()
@@ -65,20 +67,16 @@ async def download_video(url, reply_msg, user_mention, user_id):
                 user_id=user_id,
             )
 
-            
             loop = asyncio.get_running_loop()
             safe_edit_message(reply_msg, progress_text, loop)
 
-        elif d["status"] == "finished":
-            return d["filename"]
-
-    #ydl_opts["progress_hooks"].append(progress_hook)
+    ydl_opts["progress_hooks"].append(progress_hook)
 
     with YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(fast_download_link, download=True)
         file_path = ydl.prepare_filename(info)
 
-    # Download thumbnail
+    # Download Thumbnail
     thumbnail_path = os.path.join(download_dir, "thumbnail.jpg")
     thumbnail_response = requests.get(thumbnail_url)
     with open(thumbnail_path, "wb") as thumb_file:
@@ -88,7 +86,7 @@ async def download_video(url, reply_msg, user_mention, user_id):
 
     return file_path, thumbnail_path, video_title
 
-
+# Upload Video Function
 async def upload_video(client, file_path, thumbnail_path, video_title, reply_msg, collection_channel_id, user_mention, user_id, message):
     file_size = os.path.getsize(file_path)
     uploaded = 0
@@ -100,8 +98,8 @@ async def upload_video(client, file_path, thumbnail_path, video_title, reply_msg
         uploaded = current
         percentage = (current / total) * 100
         elapsed_time_seconds = (datetime.now() - start_time).total_seconds()
-        
-        if time.time() - last_update_time > 2:
+
+        if time.time() - last_update_time > 2:  # Update every 2 seconds
             progress_text = format_progress_bar(
                 filename=video_title,
                 percentage=percentage,
@@ -116,7 +114,8 @@ async def upload_video(client, file_path, thumbnail_path, video_title, reply_msg
                 aria2p_gid=""
             )
             try:
-                await reply_msg.edit_text(progress_text)
+                if reply_msg.text != progress_text:
+                    await reply_msg.edit_text(progress_text)
                 last_update_time = time.time()
             except Exception as e:
                 logging.warning(f"Error updating progress message: {e}")
@@ -143,3 +142,4 @@ async def upload_video(client, file_path, thumbnail_path, video_title, reply_msg
     os.remove(file_path)
     os.remove(thumbnail_path)
     return collection_message.id
+            
