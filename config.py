@@ -5,13 +5,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-ADMINS = list(map(int, os.environ.get('ADMINS', '1679112664').split()))
+ADMINS = list(map(int, os.environ.get('ADMINS', '5084389526').split()))
 api_id = os.environ.get('TELEGRAM_API', '')
-api_hash = os.environ.get('TELEGRAM_HASH', '')
+api_hash = os.environ.get('TELEGRAM_HASH', '561ae93345a2a4e435cff3c75a088b72')
 bot_token = os.environ.get('BOT_TOKEN', '')
-dump_id = os.environ.get('DUMP_CHAT_ID', '')
-fsub_id = os.environ.get('FSUB_ID', '')
-mongo_url = os.environ.get('MONGO_URL', '')
+dump_id = os.environ.get('DUMP_CHAT_ID', '-1002688354661')
+fsub_id = os.environ.get('FSUB_ID', '-1002688354661')
+mongo_url = os.environ.get('MONGO_URL', 'mongodb+srv://hegodal811:rsRu17pspZAcp6V7@cluster0.prsvqax.mongodb.net/?retryWrites=true&w=majority')
 
 
 
