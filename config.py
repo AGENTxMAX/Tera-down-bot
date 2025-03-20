@@ -5,16 +5,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-ADMINS = list(map(int, os.environ.get('ADMINS', '5084389526').split()))
-#All Variables Are Required
-BOT_TOKEN = "7838756294:AAHl13XUVw-8wgVJmla-Dz5qUl-8C9ijB_I"
-TELEGRAM_API = "20026290"
-TELEGRAM_HASH = "561ae93345a2a4e435cff3c75a088b72"
-FSUB_ID = "-1002688354661"
-DUMP_CHAT_ID = "-1002688354661"
-ADMIN_ID = "5084389526"
-PORT = "8000"
-# Your code to start the web server on the specified port
+ADMINS = list(map(int, os.environ.get('ADMINS', '1679112664').split()))
+api_id = os.environ.get('TELEGRAM_API', '')
+api_hash = os.environ.get('TELEGRAM_HASH', '')
+bot_token = os.environ.get('BOT_TOKEN', '')
+dump_id = os.environ.get('DUMP_CHAT_ID', '')
+fsub_id = os.environ.get('FSUB_ID', '')
+mongo_url = os.environ.get('MONGO_URL', '')
 
 
 
@@ -33,3 +30,39 @@ VERIFY_EXPIRE = int(os.environ.get('VERIFY_EXPIRE', 43200)) # Add time in second
 IS_VERIFY = os.environ.get("IS_VERIFY", "False")
 TUT_VID = os.environ.get("TUT_VID", "https://t.me/ultroid_official/18") # shareus ka tut_vid he 
 
+
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+if not ADMINS:
+    logging.error("ADMINS variable is missing! Exiting now")
+    exit(1)
+
+if not api_id:
+    logging.error("TELEGRAM_API variable is missing! Exiting now")
+    exit(1)
+
+if not api_hash:
+    logging.error("TELEGRAM_HASH variable is missing! Exiting now")
+    exit(1)
+
+if not bot_token:
+    logging.error("BOT_TOKEN variable is missing! Exiting now")
+    exit(1)
+
+if not dump_id:
+    logging.error("DUMP_CHAT_ID variable is missing! Exiting now")
+    exit(1)
+else:
+    dump_id = int(dump_id)
+
+if not fsub_id:
+    logging.error("FSUB_ID variable is missing! Exiting now")
+    exit(1)
+else:
+    fsub_id = int(fsub_id)
+
+if not mongo_url:
+    logging.error("MONGO_URL variable is missing! Exiting now")
+    exit(1)
