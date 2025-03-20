@@ -5,13 +5,16 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-ADMINS = list(map(int, os.environ.get('ADMINS', '1679112664').split()))
-api_id = os.environ.get('TELEGRAM_API', '')
-api_hash = os.environ.get('TELEGRAM_HASH', '')
-bot_token = os.environ.get('BOT_TOKEN', '')
-dump_id = os.environ.get('DUMP_CHAT_ID', '')
-fsub_id = os.environ.get('FSUB_ID', '')
-mongo_url = os.environ.get('MONGO_URL', '')
+ADMINS = list(map(int, os.environ.get('ADMINS', '5084389526').split()))
+#All Variables Are Required
+BOT_TOKEN = "7838756294:AAHl13XUVw-8wgVJmla-Dz5qUl-8C9ijB_I"
+TELEGRAM_API = "20026290"
+TELEGRAM_HASH = "561ae93345a2a4e435cff3c75a088b72"
+FSUB_ID = "-1002688354661"
+DUMP_CHAT_ID = "-1002688354661"
+ADMIN_ID = "5084389526"
+PORT = "8000"
+# Your code to start the web server on the specified port
 
 
 
