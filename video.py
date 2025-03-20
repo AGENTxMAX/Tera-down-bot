@@ -21,7 +21,7 @@ def safe_edit_message(reply_msg, progress_text, loop):
 
     asyncio.run_coroutine_threadsafe(edit(), loop)
 
-# Download Video Function
+# Function to download video
 async def download_video(url, reply_msg, user_mention, user_id):
     response = requests.get(f"https://terabox.udayscriptsx.workers.dev/?url={url}")
     response.raise_for_status()
@@ -38,13 +38,14 @@ async def download_video(url, reply_msg, user_mention, user_id):
 
     ydl_opts = {
         "outtmpl": output_template,
-        "progress_hooks": [],
         "noplaylist": True,
+        "socket_timeout": 120,  # Increased timeout
+        "retries": 3,  # Retry failed downloads 3 times
     }
 
     start_time = datetime.now()
 
-    # Download Progress Hook
+    # Progress Hook
     def progress_hook(d):
         if d["status"] == "downloading":
             percentage = d.get("_percent_str", "0%").strip()
@@ -70,15 +71,23 @@ async def download_video(url, reply_msg, user_mention, user_id):
             loop = asyncio.get_running_loop()
             safe_edit_message(reply_msg, progress_text, loop)
 
-    ydl_opts["progress_hooks"].append(progress_hook)
+    ydl_opts["progress_hooks"] = [progress_hook]
 
-    with YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(fast_download_link, download=True)
-        file_path = ydl.prepare_filename(info)
+    # Retry logic for yt-dlp
+    for attempt in range(3):
+        try:
+            with YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(fast_download_link, download=True)
+                file_path = ydl.prepare_filename(info)
+                break  # Exit loop if download succeeds
+        except Exception as e:
+            print(f"Download attempt {attempt + 1} failed: {e}")
+            if attempt == 2:  # If it's the last attempt, raise the error
+                raise
 
     # Download Thumbnail
     thumbnail_path = os.path.join(download_dir, "thumbnail.jpg")
-    thumbnail_response = requests.get(thumbnail_url)
+    thumbnail_response = requests.get(thumbnail_url, timeout=30)  # Set timeout for thumbnail
     with open(thumbnail_path, "wb") as thumb_file:
         thumb_file.write(thumbnail_response.content)
 
@@ -86,7 +95,7 @@ async def download_video(url, reply_msg, user_mention, user_id):
 
     return file_path, thumbnail_path, video_title
 
-# Upload Video Function
+# Function to upload video
 async def upload_video(client, file_path, thumbnail_path, video_title, reply_msg, collection_channel_id, user_mention, user_id, message):
     file_size = os.path.getsize(file_path)
     uploaded = 0
@@ -142,4 +151,4 @@ async def upload_video(client, file_path, thumbnail_path, video_title, reply_msg
     os.remove(file_path)
     os.remove(thumbnail_path)
     return collection_message.id
-            
+                
