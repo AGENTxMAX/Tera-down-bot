@@ -1,19 +1,16 @@
-FROM python:3.10-slim
+FROM python:3.9
 
-# APT packages update karein aur unnecessary dependencies na install karein
-RUN apt-get update && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Install aria2
+RUN apt-get update && apt-get install -y aria2
 
-# Pip, setuptools aur wheel ko upgrade karein
-RUN pip install --upgrade pip setuptools wheel
-
+# Set the working directory
 WORKDIR /app
 
-# Repository ke sabhi files copy karein
+# Copy files to the container
 COPY . /app
 
-# Python dependencies install karein
-RUN pip install -r requirements.txt
+# Install Python dependencies
+RUN pip install --no-cache-dir --force-reinstall -r requirements.txt
 
-# Container start hone par start.sh script run karein
-CMD ["bash", "start.sh"]
+# Start aria2c and the Python script
+CMD aria2c --enable-rpc --rpc-listen-all=false --rpc-allow-origin-all --daemon && python terabox.py
