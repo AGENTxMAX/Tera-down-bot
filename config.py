@@ -5,12 +5,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-ADMINS = list(map(int, os.environ.get('ADMINS', '5084389526').split()))
-api_id = os.environ.get('TELEGRAM_API', '20026290')
-api_hash = os.environ.get('TELEGRAM_HASH', '561ae93345a2a4e435cff3c75a088b72')
-bot_token = os.environ.get('BOT_TOKEN', '7838756294:AAHl13XUVw-8wgVJmla-Dz5qUl-8C9ijB_I')
-dump_id = os.environ.get('DUMP_CHAT_ID', '-1002688354661')
-fsub_id = os.environ.get('FSUB_ID', '-1002688354661')
+ADMINS = list(map(int, os.environ.get('ADMINS', '1687601586').split()))
+api_id = os.environ.get('TELEGRAM_API', '26337689')
+api_hash = os.environ.get('TELEGRAM_HASH', '22cd104354b08dd79d0fb3082366c4b7')
+bot_token = os.environ.get('BOT_TOKEN', '7464051534:AAFh0S27cHY0_vg1Ahm2Gn5J77b4-KS7MHs')
+dump_id = os.environ.get('DUMP_CHAT_ID', '--1002577970040')
+fsub_id = os.environ.get('FSUB_ID', '--1002606881347')
 mongo_url = os.environ.get('MONGO_URL', 'mongodb+srv://hegodal811:rsRu17pspZAcp6V7@cluster0.prsvqax.mongodb.net/?retryWrites=true&w=majority')
 
 
