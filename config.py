@@ -11,24 +11,24 @@ api_hash = os.environ.get('TELEGRAM_HASH', '22cd104354b08dd79d0fb3082366c4b7')
 bot_token = os.environ.get('BOT_TOKEN', '7464051534:AAFh0S27cHY0_vg1Ahm2Gn5J77b4-KS7MHs')
 dump_id = os.environ.get('DUMP_CHAT_ID', '-1002577970040')
 fsub_id = os.environ.get('FSUB_ID', '-1002606881347')
-mongo_url = os.environ.get('MONGO_URL', 'mongodb+srv://hegodal811:rsRu17pspZAcp6V7@cluster0.prsvqax.mongodb.net/?retryWrites=true&w=majority')
+mongo_url = os.environ.get('MONGO_URL', 'mongodb+srv://drive082005:AiJSaaQ2zXg8ssMa@cluster0.mhw5cfu.mongodb.net/?retryWrites=true&w=majority')
 
 
 
 #Database 
 #Database [https://youtu.be/qFB0cFqiyOM?si=fVicsCcRSmpuja1A]
-DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://hegodal811:rsRu17pspZAcp6V7@cluster0.prsvqax.mongodb.net/?retryWrites=true&w=majority")
-DB_NAME = os.environ.get("DATABASE_NAME", "cphdlust")
+DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://drive082005:AiJSaaQ2zXg8ssMa@cluster0.mhw5cfu.mongodb.net/?retryWrites=true&w=majority")
+DB_NAME = os.environ.get("DATABASE_NAME", "drive082005")
 
 #Shortner (token system) 
 # check my discription to help by using my refer link of shareus.io
 
 
-SHORTLINK_URL = os.environ.get("SHORTLINK_URL", None)
-SHORTLINK_API = os.environ.get("SHORTLINK_API", None)
+SHORTLINK_URL = os.environ.get("SHORTLINK_URL", "https://gplinks.com/")
+SHORTLINK_API = os.environ.get("SHORTLINK_API", "324b4084576edec534a6876eb48965ffcd98ec71")
 VERIFY_EXPIRE = int(os.environ.get('VERIFY_EXPIRE', 43200)) # Add time in seconds
-IS_VERIFY = os.environ.get("IS_VERIFY", "False")
-TUT_VID = os.environ.get("TUT_VID", "https://t.me/ultroid_official/18") # shareus ka tut_vid he 
+IS_VERIFY = os.environ.get("IS_VERIFY", "True")
+TUT_VID = os.environ.get("TUT_VID", "https://t.me/AgentxMax/3") # shareus ka tut_vid he 
 
 
 import logging
