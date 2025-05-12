@@ -311,7 +311,7 @@ async def handle_message(client, message: Message):
         await upload_video(client, file_path, thumbnail_path, video_title, reply_msg, dump_id, user_mention, user_id, message)
     except Exception as e:
         logging.error(f"Error handling message: {e}")
-        await reply_msg.edit_text("Failed to process your request.\nIf your file size is more than 120MB, it might fail to download.")
+        await reply_msg.edit_text("Failed to process your request.\nIf your file size is more than 1200MB, it might fail to download.")
 
 
 if __name__ == "__main__":
