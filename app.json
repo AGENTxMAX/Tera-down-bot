@@ -16,12 +16,12 @@
     "env": {
       "TELEGRAM_API": {
         "description": "Get this value from https://my.telegram.org",
-        "value": "25401847",
+        "value": "26337689",
         "required": true
       },
       "TELEGRAM_HASH": {
         "description": "Get this value from https://my.telegram.org",
-        "value": "ca8a79df8704ed676fca6891b7bc08ce",
+        "value": "22cd104354b08dd79d0fb3082366c4b7",
         "required": true
       },
       "BOT_TOKEN": {
@@ -31,7 +31,7 @@
       },
       "FSUB_ID": {
         "description": "fsub id",
-        "value": "-1002418545472",
+        "value": "-1002606881347",
         "required": false
       },
       "MONGO_URL": {
@@ -41,17 +41,17 @@
       },
       "ADMINS": {
         "description": "The user id(s) of user(s) whom you would like to add as a OWNER. Multiple values shall be seperated with a space.",
-        "value": "1679112664",
+        "value": "1687601586",
         "required": true
       },
       "DUMP_CHAT_ID": {
         "description": "logger channel id",
-        "value": "-1002410826785",
+        "value": "-1002577970040",
         "required": true
       },
       "UPSTREAM_REPO": {
         "description": "If you dont know this, Leave as it is",
-        "value": "https://github.com/IamDvis/Tera-down-bot",
+        "value": "https://github.com/AGENTxMAX/Tera-down-bot",
         "required": true
       },
       "UPSTREAM_BRANCH": {
