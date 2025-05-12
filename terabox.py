@@ -102,8 +102,8 @@ async def start_command(client, message):
             f"Welcome, {user_mention}.\n\n"
             "🌟 I am a terabox downloader bot. Send me any terabox link and I will download it within a few seconds and send it to you ✨."
         )
-    join_button = InlineKeyboardButton("Join ❤️🚀", url="https://t.me/ultroid_official")
-    developer_button = InlineKeyboardButton("Developer ⚡️", url="https://t.me/ultroidxTeam")
+    join_button = InlineKeyboardButton("Join ❤️🚀", url="https://t.me/AgentxMax")
+    developer_button = InlineKeyboardButton("Developer ⚡️", url="https://t.me/AgentxMax")
     reply_markup = InlineKeyboardMarkup([[join_button, developer_button]])
     await message.reply_text(reply_message, reply_markup=reply_markup)
     
@@ -155,8 +155,8 @@ async def start_command(client, message):
             f"Welcome, {user_mention}.\n\n"
             "🌟 I am a terabox downloader bot. Send me any terabox link and I will download it within a few seconds and send it to you ✨."
         )
-        join_button = InlineKeyboardButton("Join ❤️🚀", url="https://t.me/ultroid_official")
-        developer_button = InlineKeyboardButton("Developer ⚡️", url="https://t.me/ultroidxTeam")
+        join_button = InlineKeyboardButton("Join ❤️🚀", url="https://t.me/AgentxMax")
+        developer_button = InlineKeyboardButton("Developer ⚡️", url="https://t.me/AgentxMax")
         reply_markup = InlineKeyboardMarkup([[join_button, developer_button]])
         await message.reply_text(reply_message, reply_markup=reply_markup)
     else:
@@ -164,7 +164,7 @@ async def start_command(client, message):
         if IS_VERIFY:
             token = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
             logging.info(f"Generated token: {token}")
-            link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f'https://t.me/drm2_bot?start=verify_{token}')
+            link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f'https://t.me/teraboxdownloaderxx_bot?start=verify_{token}')
             await db_update_verify_status(user_id, {**verify_status, 'verify_token': token, 'link': link})
             message_text = (
                 "Your ads token has expired. Please refresh your token and try again.\n\n"
@@ -173,7 +173,7 @@ async def start_command(client, message):
                 "This is an ads token. If you pass 1 ad, you can use the bot for 12 hours after passing the ad.\n\n"
             )
             token_button = InlineKeyboardButton("Get Token", url=link)
-            tutorial_button = InlineKeyboardButton("How to Verify", url="https://t.me/ultroid_official/18")
+            tutorial_button = InlineKeyboardButton("How to Verify", url="https://t.me/AgentxMax/3")
             reply_markup = InlineKeyboardMarkup([[token_button], [tutorial_button]])
             await message.reply_text(message_text, reply_markup=reply_markup)
         else:
@@ -293,7 +293,7 @@ async def handle_message(client, message: Message):
     is_member = True or await is_user_member(client, user_id)
 
     if not is_member:
-        join_button = InlineKeyboardButton("Join ❤️🚀", url="https://t.me/ultroid_official")
+        join_button = InlineKeyboardButton("Join ❤️🚀", url="https://t.me/AgentxMax")
         reply_markup = InlineKeyboardMarkup([[join_button]])
         await message.reply_text("You must join my channel to use me.", reply_markup=reply_markup)
         return
