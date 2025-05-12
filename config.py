@@ -9,8 +9,8 @@ ADMINS = list(map(int, os.environ.get('ADMINS', '1687601586').split()))
 api_id = os.environ.get('TELEGRAM_API', '26337689')
 api_hash = os.environ.get('TELEGRAM_HASH', '22cd104354b08dd79d0fb3082366c4b7')
 bot_token = os.environ.get('BOT_TOKEN', '7464051534:AAFh0S27cHY0_vg1Ahm2Gn5J77b4-KS7MHs')
-dump_id = os.environ.get('DUMP_CHAT_ID', '--1002577970040')
-fsub_id = os.environ.get('FSUB_ID', '--1002606881347')
+dump_id = os.environ.get('DUMP_CHAT_ID', '-1002577970040')
+fsub_id = os.environ.get('FSUB_ID', '-1002606881347')
 mongo_url = os.environ.get('MONGO_URL', 'mongodb+srv://hegodal811:rsRu17pspZAcp6V7@cluster0.prsvqax.mongodb.net/?retryWrites=true&w=majority')
 
 
