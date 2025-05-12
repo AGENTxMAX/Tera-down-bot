@@ -23,7 +23,7 @@ def safe_edit_message(reply_msg, progress_text, loop):
 
 # Function to download video
 async def download_video(url, reply_msg, user_mention, user_id):
-    response = requests.get(f"https://terabox.udayscriptsx.workers.dev/?url={url}")
+    response = requests.get(f"https://violent-tahr-agentxmax-0cd72c23.koyeb.app/?url={url}")
     response.raise_for_status()
     data = response.json()
 
